@@ -278,5 +278,197 @@ else:
 
 ``Jitter Absoluto (Mujer 3): 0.000568 s``
 
-``Jitter Relativo (Mujer 2): 21.214 %``
+``Jitter Relativo (Mujer 3): 21.214 %``
+
+### Shimmer
+
+El shimmer indica como varia la amplitud de la voz de un ciclo a otro. Como se menciona anteriormente las cuerdas vocales vibran mucho por segundo, cada vibración produce un pico de amplitud que si la voz es completamente uniforme cada pico tendría la misma altura, pero en condiciones normales siempre existen diferencias también. Las diferencias en amplitudes de los ciclos se conocen cómo shimmers. Dependiendo de un shimmer bajo significa que la voz es más estable, mientras que uno alto indican fluctuaciones estando relacionados con fatigas vocales. 
+
+>### Explicación General del Código
+Primero, se lee el archivo de audio y se normaliza la señal para que sus valores estén entre -1 y 1, facilitando los cálculos posteriores. Luego, se detectan los picos de la señal, que representan los momentos de mayor amplitud de cada ciclo de vibración de las cuerdas vocales. Se establece una distancia entre picos para evitar detectar falsos máximos y asegurarse de que solo se consideren los ciclos reales de la voz. A partir de estos picos se extraen las amplitudes correspondientes. Finalmente, el código calcula el shimmer absoluto, que es la variación promedio de amplitud entre ciclos consecutivos, y el shimmer relativo, que expresa esa variación como un porcentaje respecto al promedio de todas las amplitudes.
+
+>### Hombre 1
+
+```python
+fshs1, h1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-1.wav")
+h1 = h1 / np.max(np.abs(h1))
+distancia_min = int(fshs1 / 80)
+picos, _ = find_peaks(h1, distance=distancia_min)
+amplitudes = h1[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Hombre 1")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+``Shimmer Absoluto (amplitud): 0.060``
+
+``Shimmer Relativo (%): 37.284``
+
+``Amplitud Media: 0.161``
+
+``Número de Ciclos: 213``
+
+>### Hombre 2
+
+```python
+fshs2, h2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-2.wav")
+h2 = h2 / np.max(np.abs(h2))
+distancia_min = int(fshs2 / 80)
+picos, _ = find_peaks(h2, distance=distancia_min)
+amplitudes = h2[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Hombre 2")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.086``
+
+``Shimmer Relativo (%): 41.858``
+
+``Amplitud Media: 0.205``
+
+``Número de Ciclos: 168``
+
+>### Hombre 3
+
+```python
+fshs3, h3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-3.wav")
+h3 = h3 / np.max(np.abs(h3))
+distancia_min = int(fshs3 / 80)
+picos, _ = find_peaks(h3, distance=distancia_min)
+amplitudes = h3[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Hombre 3")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.082``
+
+``Shimmer Relativo (%): 47.956``
+
+``Amplitud Media: 0.171``
+
+``Número de Ciclos: 185``
+
+>### Mujer 1
+
+```python
+fsms1, m1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-1.wav")
+m1 = m1 / np.max(np.abs(m1))
+distancia_min = int(fsms1 / 80)
+picos, _ = find_peaks(m1, distance=distancia_min)
+amplitudes = m1[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Mujer 1")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.053``
+
+``Shimmer Relativo (%): 33.451``
+
+``Amplitud Media: 0.159``
+
+``Número de Ciclos: 194``
+
+>### Mujer 2
+
+```python
+fsms2, m2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-2.wav")
+m2 = m2 / np.max(np.abs(m2))
+distancia_min = int(fsms2 / 150)
+picos, _ = find_peaks(m2, distance=distancia_min)
+amplitudes = m2[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Mujer 2")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.060``
+
+``Shimmer Relativo (%): 39.900``
+
+``Amplitud Media: 0.150``
+
+``Número de Ciclos: 235``
+
+>### Mujer 3
+
+```python
+fsms3, m3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-3.wav")
+m3 = m3 / np.max(np.abs(m3))
+distancia_min = int(fsms3 / 80)
+picos, _ = find_peaks(m3, distance=distancia_min)
+amplitudes = m3[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Mujer 3")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+
+``Shimmer Absoluto (amplitud): 0.075``
+
+``Shimmer Relativo (%): 49.579``
+
+``Amplitud Media: 0.151``
+
+``Número de Ciclos: 182``
+
 ## Parte C
