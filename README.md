@@ -210,4 +210,73 @@ else:
 ``Jitter Absoluto (Hombre 3): 0.000842 s``
 
 ``Jitter Relativo (Hombre 3): 24.141 %``
+
+>### Mujer 1
+
+```python
+fsm1, mujer1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-1.wav")
+distancia_min = int(fsm1 / 500)
+picos, _ = find_peaks(mujer1, distance=distancia_min)
+tiempos = picos / fsm1
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Mujer 1): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Mujer 1): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Mujer 1): 0.000584 s``
+
+``Jitter Relativo (Mujer 1): 21.297 %``
+
+>### Mujer 2
+
+```python
+fsm2, mujer2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-2.wav")
+distancia_min = int(fsm2 / 400)
+picos, _ = find_peaks(mujer2, distance=distancia_min)
+tiempos = picos / fsm2
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Mujer 2): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Mujer 2): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Mujer 2): 0.000644 s``
+
+``Jitter Relativo (Mujer 2): 17.806 %``
+
+>### Mujer 3
+
+```python
+fsm3, mujer3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-3.wav")
+distancia_min = int(fsm3 / 500)
+picos, _ = find_peaks(mujer3, distance=distancia_min)
+tiempos = picos / fsm3
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Mujer 2): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Mujer 2): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Mujer 3): 0.000568 s``
+
+``Jitter Relativo (Mujer 2): 21.214 %``
 ## Parte C
