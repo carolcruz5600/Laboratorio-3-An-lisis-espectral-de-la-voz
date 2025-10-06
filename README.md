@@ -491,17 +491,16 @@ Las grabaciones se realizaron en condiciones controladas con buena calidad de se
 
 >### 2.1 Tabla de Resultados por Grupo
 
-| **Sujeto**          | **F0 (Hz)** | **F Media (Hz)** | **Brillo** | **Energía (×10¹⁵)** | **Jitter (%)** |
-|-----------------|---------|--------------|--------|-----------------|------------|
-| Hombre 1        | 577.18  | 3142.40      | 0.488  | 82.65           | 21.14      |
-| Hombre 2        | 571.95  | 3080.58      | 0.439  | 106.80          | 23.12      |
-| Hombre 3        | 499.36  | 4487.85      | 0.474  | 86.68           | 24.14      |
-| Mujer 1         | 246.41  | 3972.60      | 0.469  | 44.94           | 21.30      |
-| Mujer 2         | 446.49  | 4866.95      | 0.630  | 63.99           | 17.81      |
-| Mujer 3         | 422.92  | 5008.83      | 0.550  | 64.36           | 21.21      |
-| **Promedio Hombres** | **549.50** | **3570.28** | **0.467** | **92.04** | **22.80** |
-| **Promedio Mujeres** | **371.94** | **4616.13** | **0.550** | **57.76** | **20.11** |
-
+| Sujeto            | F0 (Hz) | F Media (Hz) | Brillo | Energía (×10¹⁵) | Jitter (%) | Shimmer (%) |
+|-------------------|---------|--------------|--------|-----------------|------------|-------------|
+| Hombre 1          | 577.18  | 3142.40      | 0.488  | 82.65           | 21.14      | 37.28       |
+| Hombre 2          | 571.95  | 3080.58      | 0.439  | 106.80          | 23.12      | 41.86       |
+| Hombre 3          | 499.36  | 4487.85      | 0.474  | 86.68           | 24.14      | 47.96       |
+| Mujer 1           | 246.41  | 3972.60      | 0.469  | 44.94           | 21.30      | 33.45       |
+| Mujer 2           | 446.49  | 4866.95      | 0.630  | 63.99           | 17.81      | 39.90       |
+| Mujer 3           | 422.92  | 5008.83      | 0.550  | 64.36           | 21.21      | 49.58       |
+| **Promedio Hombres** | **549.50** | **3570.28** | **0.467** | **92.04** | **22.80** | **42.37** |
+| **Promedio Mujeres** | **371.94** | **4616.13** | **0.550** | **57.76** | **20.11** | **40.98** |
 
 >### 2.2 Gráficos Comparativos
 
@@ -540,8 +539,15 @@ La energía total revela mayor intensidad en las grabaciones masculinas (promedi
 
 El jitter relativo muestra valores similares entre ambos grupos, con promedios de ``22.80%`` en hombres (rango ``21.14-24.14%``) y ``20.11%`` en mujeres (rango ``17.81-21.30%``). La distribución homogénea y la ausencia de diferencias significativas entre géneros contrasta con las expectativas fisiológicas, pero más importante aún, los valores absolutos exceden dramáticamente los rangos clínicos normales (``<1%``) e incluso patológicos severos (``>5%``). Esta consistencia en valores anormalmente elevados en todos los participantes confirma un error sistemático en el algoritmo de detección de ciclos glóticos, independiente del género del hablante, indicando que la metodología requiere corrección antes de que estos resultados puedan considerarse válidos clínicamente.
 
+>### Gráfico 5:
+
+<img width="826" height="354" alt="image" src="https://github.com/user-attachments/assets/e0ea2d75-d32c-4e77-9e93-fccd163eb9f3" />
+<br>
+
+El shimmer relativo muestra valores elevados en ambos grupos con promedios muy similares: ``42.37%`` en hombres (rango ``37.28-47.96%``) y ``40.98%`` en mujeres (rango ``33.45-49.58%``), con una diferencia de apenas ``3.3%``. La dispersión dentro de cada grupo es considerable, especialmente en las mujeres donde los valores oscilan entre ``33.45%`` y ``49.58%``. Sin embargo, estos valores exceden los rangos clínicos normales (``<3-5%``).
+
 > [!IMPORTANT]  
-> Los valores de F0 y Jitter presentan anomalías significativas. F0 esperado: ``5-180 Hz`` (hombres), ``165-255 Hz`` (mujeres). Jitter normal: ``<1.5%``
+> Los valores de F0, Jitter y Shimmer presentan anomalías significativas. F0 esperado: ``5-180 Hz`` (hombres), ``165-255 Hz`` (mujeres). Jitter normal: ``<1.5%``. Shimmer normal ``<3-5%``
 
 >### 2.3 Diferencias Observadas en Frecuencia Fundamental
 
@@ -561,15 +567,15 @@ El jitter relativo muestra valores similares entre ambos grupos, con promedios d
 
 **Brillo Espectral**: Las mujeres mostraron ``17.8%`` más brillo (``0.550`` vs ``0.467``), indicando mayor concentración de energía por encima de ``1500 Hz``. Esto explica perceptualmente por qué las voces femeninas suenan más "agudas" o "brillantes". Este resultado también es consistente y esperado.
 
-**Intensidad**: Los hombres registraron 38% mayor energía. Aunque puede reflejar diferencias fisiológicas (mayor masa de cuerdas vocales), sin normalización de volumen no es posible distinguir entre diferencias reales y artefactos de grabación (distancia al micrófono, ganancia variable).
+**Intensidad**: Los hombres registraron ``38%`` mayor energía. Aunque puede reflejar diferencias fisiológicas (mayor masa de cuerdas vocales), sin normalización de volumen no es posible distinguir entre diferencias reales y artefactos de grabación (distancia al micrófono, ganancia variable).
 
 ### **3. Conclusiones sobre el Comportamiento de la Voz**
 
-El análisis confirmó las diferencias anatómicas y fisiológicas esperadas entre voces masculinas y femeninas, evidenciando patrones consistentes en la producción vocal. Las voces femeninas se caracterizaron por un desplazamiento hacia frecuencias más altas, reflejado en una mayor frecuencia media (``+29.3%``) y un incremento en el brillo espectral (``+17.8%``). Este comportamiento se explica por la menor longitud del tracto vocal femenino (``14–15 cm`` frente a ``17–18 cm`` en hombres), lo que genera resonancias en frecuencias superiores. De acuerdo con los principios acústicos, un conducto más corto produce formantes más elevados, lo que eleva el centro de gravedad espectral y contribuye a la percepción de un timbre más agudo.
+El análisis confirmó las diferencias anatómicas y fisiológicas esperadas entre voces masculinas y femeninas, evidenciando patrones consistentes en la producción vocal. Las voces femeninas se caracterizaron por un desplazamiento hacia frecuencias más altas, reflejado en una mayor frecuencia media ``+29.3%``) y un incremento en el brillo espectral (``+17.8%``). Este comportamiento se explica por la menor longitud del tracto vocal femenino (``14–15 cm`` frente a ``17–18 cm`` en hombres), lo que genera resonancias en frecuencias superiores. De acuerdo con los principios acústicos, un conducto más corto produce formantes más elevados, lo que eleva el centro de gravedad espectral y contribuye a la percepción de un timbre más agudo.
 
-Los parámetros espectrales analizados (frecuencia media y brillo) mostraron consistencia y concordancia con lo descrito en la literatura, lo que confirma su utilidad como descriptores para diferenciar características vocales entre géneros. 
+Los parámetros espectrales analizados (frecuencia media y brillo) mostraron consistencia y concordancia con lo descrito en la literatura, lo que confirma su utilidad como descriptores para diferenciar características vocales entre géneros.
 
-En contraste, los parámetros temporales (frecuencia fundamental y jitter) presentaron variaciones atípicas atribuibles a las limitaciones del procedimiento de cálculo utilizado. La frecuencia fundamental requiere técnicas de estimación que identifiquen de manera precisa la periodicidad de la señal, mientras que el método aplicado se basó en la detección del máximo espectral, el cual puede verse afectado por la energía de los armónicos. Este aspecto no invalida los resultados generales, pero resalta la importancia de emplear procedimientos específicos y adecuados para cada tipo de parámetro.
+En contraste, los parámetros temporales (frecuencia fundamental, jitter y shimmer) presentaron variaciones atípicas atribuibles a las limitaciones del procedimiento de cálculo utilizado. La frecuencia fundamental requiere técnicas de estimación que identifiquen de manera precisa la periodicidad de la señal, mientras que el método aplicado se basó en la detección del máximo espectral, el cual puede verse afectado por la energía de los armónicos. De manera similar, tanto el jitter como el shimmer mostraron valores anormalmente elevados (``22.80%`` y ``42.37%`` en hombres; ``20.11% y 40.98%``en mujeres respectivamente) que exceden ampliamente los rangos normales, evidenciando que no se identificaron correctamente los períodos glóticos. 
 
 ### **4. Importancia Clínica del Jitter y Shimmer**
 >### 4.1 Relevancia Clínica
@@ -591,7 +597,7 @@ El jitter (variabilidad de frecuencia ciclo a ciclo) y shimmer (variabilidad de 
 
 >### 4.2. Evaluación de Resultados Obtenidos
 
-Los valores obtenidos para Jitter (``17–24%`` en todos los sujetos) y Shimmer (``37–42%`` en hombres) se encuentran muy por encima de los rangos fisiológicos reportados en la literatura. Estos resultados no deben interpretarse como indicativos de patología vocal en los participantes, sino como consecuencia de limitaciones en el procedimiento de detección automática de ciclos glóticos. En particular, el uso de ``find_peaks()`` con una distancia mínima basada únicamente en la frecuencia estimada puede llevar a identificar oscilaciones de alta frecuencia en lugar de ciclos glóticos completos.
+Los valores obtenidos para Jitter (``17–24%`` en todos los sujetos) y Shimmer (``37–50%`` en todos los sujetos, con promedios de ``42.37%`` en hombres y ``40.98%`` en mujeres) se encuentran muy por encima de los rangos fisiológicos reportados en la literatura (Jitter ``<1%``, Shimmer ``<3-5%``). Estos resultados no deben interpretarse como indicativos de patología vocal en los participantes, sino como consecuencia de limitaciones en el procedimiento de detección automática de ciclos glóticos. En particular, el uso de ``find_peaks()`` con una distancia mínima basada únicamente en la frecuencia estimada puede llevar a identificar oscilaciones de alta frecuencia o componentes armónicas en lugar de ciclos glóticos completos. La similitud de los valores anómalos entre ambos géneros confirma que se trata de un error del método aplicado.
 
 >### 4.3. Utilidad en Ingeniería Biomédica
 Más allá del diagnóstico clínico, jitter y shimmer tienen aplicaciones en telemedicina (monitoreo remoto de pacientes), sistemas de apoyo diagnóstico basados en inteligencia artificial, biometría vocal para autenticación, y como endpoints cuantificables en investigación farmacológica. Su medición no requiere equipamiento especializado, permitiendo evaluación objetiva mediante grabaciones simples, siempre que se utilicen algoritmos validados.
