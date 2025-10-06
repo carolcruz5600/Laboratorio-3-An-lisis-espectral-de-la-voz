@@ -1,34 +1,4 @@
-# Laboratorio 3: Análisis espectral de la voz
 
-## Integrantes
-* Laura Valentina Velásquez Castiblanco (5600846)
-* Carol Valentina Cruz Becerra (5600845)
-* Carlos Felipe Moreno Guzmán (5600881)
-
-## Objetivos:
-* Capturar y procesar señales de voz masculinas y femeninas.
-* Aplicar la Transformada de Fourier como herramienta de análisis espectral de la voz.
-* Extraer parámetros característicos de la señal de voz: frecuencia fundamental, frecuencia media, brillo, intensidad, jitter y shimmer.
-* Comparar las diferencias principales entre señales de voz de hombres y mujeres a partir de su análisis en frecuencia.
-* Desarrollar conclusiones sobre el comportamiento espectral de la voz humana en función del género. 
-
-## Configuración inicial
-
-Para la parte A y B se necesitan el uso de librerias:
-```python
-from scipy.io import wavfile
-from scipy.fft import fft, fftfreq
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.signal import butter, filtfilt
-from scipy.signal import find_peaks
-```
-* scipy.io: Para poder leer y escribir los archivos de audio ``.wav``.
-* scipy.fft: Se usa para poder trabajar con la transformada de fourier.
-* matplotlib.pyplot: Para poder realizar las diferentes graficas de las señales, transformadas y las señales filtradas.
-* numpy: Para realizar los cálculos numéricos necesarios.
-* scipy.signal: Se utiliza para realizar los filtros a las señales escogidas.
-  
 ## Parte A
 
 ## Parte B
