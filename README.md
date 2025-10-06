@@ -138,4 +138,76 @@ Tras el proceso de filtrado, la señal adquiere una forma más limpia y definida
 
 El jitter se utiliza para medir qué tanto cambia la frecuencia de la voz de un ciclo al proximo. Cuando se habla, las cuerdas vocales generan muchas vibraciones por segundo, en condiciones ideales o normales cada vibración duraría lo mismo. Pero en la realidad siempre existen diferencias, estas se les conoce como jitter. Se usa para saber que tan estable o uniforme es la voz.
 Existen dos tipos de jitter: **absoluto** que mide el cambio exacto entre un ciclo y el siguiente; **relativo** que lo compara con el promedio de todos los ciclos. Un valor alto indica que la voz es más inestable e irregula, mientras que para un valor bajo indica que la voz es más constante y controlada.
+
+>### Explicación General del Código
+Primero, se lee el archivo de audio y se obtiene la señal junto con su frecuencia de muestreo. Luego, se detectan los picos de la señal que corresponden a los ciclos de vibración de las cuerdas vocales, asegurando que la distancia mínima entre picos sea coherente con la frecuencia máxima esperada (400 Hz-500 Hz). A partir de los picos se calculan los intervalos de tiempo entre ciclos consecutivos y, usando estos valores, se determina el jitter absoluto como la media de las diferencias entre intervalos y el jitter relativo como un porcentaje respecto al promedio de los intervalos. Finalmente, se imprimen ambos valores, permitiendo evaluar la regularidad y estabilidad de la voz.
+
+>### Hombre 1
+
+```python
+fs1, hombre1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-1.wav")
+distancia_min = int(fs1 / 400)
+picos, _ = find_peaks(hombre1, distance=distancia_min)
+tiempos = picos / fs1
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Hombre 1): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Hombre 1): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Hombre 1): 0.000728 s``
+
+``Jitter Relativo (Hombre 1): 21.138 %``
+
+>### Hombre 2
+
+```python
+fs2, hombre2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-2.wav")
+distancia_min = int(fs2 / 400)
+picos, _ = find_peaks(hombre2, distance=distancia_min)
+tiempos = picos / fs2
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Hombre 2): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Hombre 2): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Hombre 2): 0.000785 s``
+
+``Jitter Relativo (Hombre 2): 23.121 %``
+
+>### Hombre 3
+
+```python
+fs3, hombre3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-3.wav")
+distancia_min = int(fs3 / 400)
+picos, _ = find_peaks(hombre3, distance=distancia_min)
+tiempos = picos / fs3
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Hombre 3): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Hombre 3): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Hombre 3): 0.000842 s``
+
+``Jitter Relativo (Hombre 3): 24.141 %``
 ## Parte C
