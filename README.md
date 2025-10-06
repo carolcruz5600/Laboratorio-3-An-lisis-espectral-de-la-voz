@@ -32,7 +32,444 @@ from scipy.signal import find_peaks
 ## Parte A
 
 ## Parte B
+### **Señal de Voz Hombre 2**
 
+Se utiliza un audio grabado por un hombre. Primero, se realizan los cálculos manuales para poder aplicar el filtro a la señal. Se utilizan frecuencias de $Ω_l = 80 Hz$ y $Ω_2 = 400 Hz$ que son frecuencias que se encuetran dentro del rango de la frecuencia fundamental esto se hace para eliminar ruido que esten fuera de esos valores recomendados a niveles de $-2dB$ para, también se utilizaron frecuencias de atenuación de $Ω_1 = 20 Hz$ y $Ω_2 = 550 Hz$ trabajadas a $-10dB$ para evitar recortes importantes o bruscos en la señales.
+Se realizaron los gráficos para observar el comportamiento del filtro pasa banda, sin embargo se diseña primero un filtro pasa bajo ya que se tiene más facilidad al momento de trabajarlo permitiendo calcular la frecuencia de corte y el orden necesarios. Posterior, se realizar la función de transferencia y la transformación necesaria para convertirlo en un filtro pasa banda.
+
+<p align="center">
+<img width="561" height="898" alt="image" src="https://github.com/user-attachments/assets/cba4b637-6973-4efb-8cc1-42063270e5aa" />
+</p>
+
+### Implementación Filtro
+
+>### Definición Variables y Señales Fijas
+En esta parte se define valores necesarios para implementar el filtro:
+```python
+fs=48000
+n=4
+fl=80
+fu=400
+```
+* $F_s$: Frecuencia de muestreo que se utiliza para la señal del audio $(48k Hz)$
+* n: El orden que se calculo previamente para el filtro butterworth $(4)$
+* $F_l$: Frecuencia baja del filtro de acuerdo a los valores recomendados $(80 Hz)$
+* $F_l$: Frecuencia alta del filtro de acuerdo a los valores recomendados $(400 Hz)$
+
+>### Leer la Señal y Aplicar Filtro
+En el código se crea y aplica un filtro digital pasa banda digital a la señal de audio de voz del hombre y preparar une eje en el tiempo para su análisis, se normalizan las señales en ``wn`` que están entre 0 y 1. Luego con la función ``butter`` se diseñan los coegicientes b y acon los parametros necesarios para el filtro, con la función ``filtfilt`` aplicando a la señal que se guardo en ``x``, evitando un desfase, por lo que se genara la señal filtrada en y. Finalmente, se crea el vector ``t`` que representa el tiempo correspondiente a cada muestra de la señal filtrada, dividiendo los índices de las muestras por la frecuencia de muestreo fs, lo que permite graficar o analizar la señal en el dominio temporal.
+```python
+fs_read, x = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-2.wav")
+wn = [fl/(fs/2), fu/(fs/2)]
+b, a = butter(n, wn, btype='bandpass', analog=False)
+# Aplicar el filtro
+y = filtfilt(b, a, x)
+# Crear eje de tiempo
+t = np.arange(len(y)) / fs
+```
+>### Graficar la Señal Filtrada
+En la parte decódigo se utiliza para graficar la señal de voz filtrada en función del tiempo, permitiendo visualizar cómo se comporta después del filtrado. Primero, se crea una figura de tamaño 10×4 pulgadas con plt.figure(figsize=(10,4)). Luego, plt.plot(t, y, color='orange') dibuja la señal y frente al tiempo t en color naranja. Se agregan título y etiquetas a los ejes con plt.title, plt.xlabel y plt.ylabel para indicar que el eje horizontal representa el tiempo en segundos y el vertical la amplitud de la señal. La función plt.grid(True) activa la cuadrícula para facilitar la lectura de valores, mientras que plt.tight_layout() ajusta automáticamente los márgenes de la figura. Finalmente, plt.show() muestra la gráfica en pantalla, permitiendo analizar visualmente la señal filtrada y verificar que las frecuencias no deseadas han sido atenuadas.
+```python
+plt.figure(figsize=(10,4))
+plt.plot(t, y, color='orange')
+plt.title('Señal de voz Hombre 2 filtrada en el tiempo')
+plt.xlabel('Tiempo [s]')
+plt.ylabel('Amplitud')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+>### Señal filtrada
+La señal filtrada presenta una mejora notable en comparación con la señal original. En la gráfica se aprecia una forma de onda más limpia, con menor presencia de variaciones pequeñas e irregulares que suelen asociarse al ruido. Esto indica que el proceso de filtrado logró eliminar componentes no deseadas del sonido, manteniendo las partes esenciales de la voz. Además, la amplitud de la señal se mantiene dentro de un rango más estable y las secciones correspondientes a las sílabas o palabras son más claras y definidas. Esto sugiere que la energía del habla se conserva correctamente y que el filtro aplicado ha cumplido su función de atenuar frecuencias innecesarias o interferencias.
+<img width="989" height="390" alt="image" src="https://github.com/user-attachments/assets/fd378801-f067-4e74-bb98-d090b447e179" />
+
+### **Señal de Voz Mujer 3**
+
+Al igual que la parte aanterior se utiliza un audio esta vez grabado por una mujer. Primero, se realizan los cálculos manuales para poder aplicar el filtro a la señal. Se utilizan frecuencias de $Ω_l = 150 Hz$ y $Ω_2 = 500 Hz$ que son frecuencias que se encuetran dentro del rango de la frecuencia fundamental esto se hace para eliminar ruido que esten fuera de esos valores recomendados a niveles de $-2dB$ para, también se utilizaron frecuencias de atenuación de $Ω_1 = 100 Hz$ y $Ω_2 = 7000 Hz$ trabajadas a $-10dB$ para evitar recortes importantes o bruscos en la señales.
+Se realizaron los gráficos para observar el comportamiento del filtro pasa banda, sin embargo se diseña primero un filtro pasa bajo ya que se tiene más facilidad al momento de trabajarlo permitiendo calcular la frecuencia de corte y el orden necesarios. Posterior, se realizar la función de transferencia y la transformación necesaria para convertirlo en un filtro pasa banda.
+
+<p align="center">
+<img width="561" height="898" alt="image" src="https://github.com/user-attachments/assets/5b3840e1-84cd-4682-afc3-aaa762a08fd2" />
+</p>
+
+### Implementación Filtro
+
+>### Definición Variables y Señales Fijas
+En esta parte se define valores necesarios para implementar el filtro:
+```python
+fs=48000
+n=3
+fl=150
+fu=500
+```
+* $F_s$: Frecuencia de muestreo que se utiliza para la señal del audio $(48k Hz)$
+* n: El orden que se calculo previamente para el filtro butterworth $(3)$
+* $F_l$: Frecuencia baja del filtro de acuerdo a los valores recomendados $(150 Hz)$
+* $F_l$: Frecuencia alta del filtro de acuerdo a los valores recomendados $(500 Hz)$
+
+>### Leer la Señal y Aplicar Filtro
+En el código se crea y aplica un filtro digital pasa banda digital a la señal de audio de voz del hombre y preparar une eje en el tiempo para su análisis, se normalizan las señales en ``wn`` que están entre 0 y 1. Luego con la función ``butter`` se diseñan los coegicientes b y acon los parametros necesarios para el filtro, con la función ``filtfilt`` aplicando a la señal que se guardo en ``x``, evitando un desfase, por lo que se genara la señal filtrada en y. Finalmente, se crea el vector ``t`` que representa el tiempo correspondiente a cada muestra de la señal filtrada, dividiendo los índices de las muestras por la frecuencia de muestreo fs, lo que permite graficar o analizar la señal en el dominio temporal.
+```python
+fs_read, x = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-3.wav")
+wn = [fl/(fs/2), fu/(fs/2)]
+b, a = butter(n, wn, btype='bandpass', analog=False)
+# Aplicar el filtro
+y = filtfilt(b, a, x)
+# Crear eje de tiempo
+t = np.arange(len(y)) / fs
+```
+>### Graficar la Señal Filtrada
+En la parte decódigo se utiliza para graficar la señal de voz filtrada en función del tiempo, permitiendo visualizar cómo se comporta después del filtrado. Primero, se crea una figura de tamaño 10×4 pulgadas con plt.figure(figsize=(10,4)). Luego, plt.plot(t, y, color='orange') dibuja la señal y frente al tiempo t en color naranja. Se agregan título y etiquetas a los ejes con plt.title, plt.xlabel y plt.ylabel para indicar que el eje horizontal representa el tiempo en segundos y el vertical la amplitud de la señal. La función plt.grid(True) activa la cuadrícula para facilitar la lectura de valores, mientras que plt.tight_layout() ajusta automáticamente los márgenes de la figura. Finalmente, plt.show() muestra la gráfica en pantalla, permitiendo analizar visualmente la señal filtrada y verificar que las frecuencias no deseadas han sido atenuadas.
+```python
+plt.figure(figsize=(10,4))
+plt.plot(t, y, color='orange')
+plt.title('Señal de voz Mujer 3 filtrada en el tiempo')
+plt.xlabel('Tiempo [s]')
+plt.ylabel('Amplitud')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+>### Señal filtrada
+Tras el proceso de filtrado, la señal adquiere una forma más limpia y definida, con una reducción notable del ruido y una mejor representación de las características propias del habla. Las oscilaciones son más suaves y los picos excesivos se atenúan, conservando únicamente las variaciones relevantes de la voz. Esto demuestra que el filtrado fue adecuado, ya que logra mantener la información principal de la señal mientras elimina las distorsiones no deseadas.
+<img width="989" height="390" alt="image" src="https://github.com/user-attachments/assets/a94e25dc-1a9c-4616-a77b-2c236aac11d0" />
+
+### Jitter
+
+El jitter se utiliza para medir qué tanto cambia la frecuencia de la voz de un ciclo al proximo. Cuando se habla, las cuerdas vocales generan muchas vibraciones por segundo, en condiciones ideales o normales cada vibración duraría lo mismo. Pero en la realidad siempre existen diferencias, estas se les conoce como jitter. Se usa para saber que tan estable o uniforme es la voz.
+Existen dos tipos de jitter: **absoluto** que mide el cambio exacto entre un ciclo y el siguiente; **relativo** que lo compara con el promedio de todos los ciclos. Un valor alto indica que la voz es más inestable e irregula, mientras que para un valor bajo indica que la voz es más constante y controlada.
+
+>### Explicación General del Código
+Primero, se lee el archivo de audio y se obtiene la señal junto con su frecuencia de muestreo. Luego, se detectan los picos de la señal que corresponden a los ciclos de vibración de las cuerdas vocales, asegurando que la distancia mínima entre picos sea coherente con la frecuencia máxima esperada (400 Hz-500 Hz). A partir de los picos se calculan los intervalos de tiempo entre ciclos consecutivos y, usando estos valores, se determina el jitter absoluto como la media de las diferencias entre intervalos y el jitter relativo como un porcentaje respecto al promedio de los intervalos. Finalmente, se imprimen ambos valores, permitiendo evaluar la regularidad y estabilidad de la voz.
+
+>### Hombre 1
+
+```python
+fs1, hombre1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-1.wav")
+distancia_min = int(fs1 / 400)
+picos, _ = find_peaks(hombre1, distance=distancia_min)
+tiempos = picos / fs1
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Hombre 1): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Hombre 1): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Hombre 1): 0.000728 s``
+
+``Jitter Relativo (Hombre 1): 21.138 %``
+
+>### Hombre 2
+
+```python
+fs2, hombre2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-2.wav")
+distancia_min = int(fs2 / 400)
+picos, _ = find_peaks(hombre2, distance=distancia_min)
+tiempos = picos / fs2
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Hombre 2): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Hombre 2): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Hombre 2): 0.000785 s``
+
+``Jitter Relativo (Hombre 2): 23.121 %``
+
+>### Hombre 3
+
+```python
+fs3, hombre3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-3.wav")
+distancia_min = int(fs3 / 400)
+picos, _ = find_peaks(hombre3, distance=distancia_min)
+tiempos = picos / fs3
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Hombre 3): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Hombre 3): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Hombre 3): 0.000842 s``
+
+``Jitter Relativo (Hombre 3): 24.141 %``
+
+>### Mujer 1
+
+```python
+fsm1, mujer1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-1.wav")
+distancia_min = int(fsm1 / 500)
+picos, _ = find_peaks(mujer1, distance=distancia_min)
+tiempos = picos / fsm1
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Mujer 1): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Mujer 1): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Mujer 1): 0.000584 s``
+
+``Jitter Relativo (Mujer 1): 21.297 %``
+
+>### Mujer 2
+
+```python
+fsm2, mujer2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-2.wav")
+distancia_min = int(fsm2 / 400)
+picos, _ = find_peaks(mujer2, distance=distancia_min)
+tiempos = picos / fsm2
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Mujer 2): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Mujer 2): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Mujer 2): 0.000644 s``
+
+``Jitter Relativo (Mujer 2): 17.806 %``
+
+>### Mujer 3
+
+```python
+fsm3, mujer3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-3.wav")
+distancia_min = int(fsm3 / 500)
+picos, _ = find_peaks(mujer3, distance=distancia_min)
+tiempos = picos / fsm3
+Ti = np.diff(tiempos)
+if len(Ti) < 2:
+  print("Error: No se detectaron suficientes ciclos para calcular jitter.")
+else:
+  diferencias = np.abs(np.diff(Ti))
+  jitter_absoluto = np.mean(diferencias)  # en segundos
+  jitter_relativo = (jitter_absoluto / np.mean(Ti)) * 100
+  print(f"Jitter Absoluto (Mujer 2): {jitter_absoluto:.6f} s")
+  print(f"Jitter Relativo (Mujer 2): {jitter_relativo:.3f} %")
+```
+#### Resultados
+
+``Jitter Absoluto (Mujer 3): 0.000568 s``
+
+``Jitter Relativo (Mujer 3): 21.214 %``
+
+### Shimmer
+
+El shimmer indica como varia la amplitud de la voz de un ciclo a otro. Como se menciona anteriormente las cuerdas vocales vibran mucho por segundo, cada vibración produce un pico de amplitud que si la voz es completamente uniforme cada pico tendría la misma altura, pero en condiciones normales siempre existen diferencias también. Las diferencias en amplitudes de los ciclos se conocen cómo shimmers. Dependiendo de un shimmer bajo significa que la voz es más estable, mientras que uno alto indican fluctuaciones estando relacionados con fatigas vocales. 
+
+>### Explicación General del Código
+Primero, se lee el archivo de audio y se normaliza la señal para que sus valores estén entre -1 y 1, facilitando los cálculos posteriores. Luego, se detectan los picos de la señal, que representan los momentos de mayor amplitud de cada ciclo de vibración de las cuerdas vocales. Se establece una distancia entre picos para evitar detectar falsos máximos y asegurarse de que solo se consideren los ciclos reales de la voz. A partir de estos picos se extraen las amplitudes correspondientes. Finalmente, el código calcula el shimmer absoluto, que es la variación promedio de amplitud entre ciclos consecutivos, y el shimmer relativo, que expresa esa variación como un porcentaje respecto al promedio de todas las amplitudes.
+
+>### Hombre 1
+
+```python
+fshs1, h1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-1.wav")
+h1 = h1 / np.max(np.abs(h1))
+distancia_min = int(fshs1 / 80)
+picos, _ = find_peaks(h1, distance=distancia_min)
+amplitudes = h1[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Hombre 1")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+``Shimmer Absoluto (amplitud): 0.060``
+
+``Shimmer Relativo (%): 37.284``
+
+``Amplitud Media: 0.161``
+
+``Número de Ciclos: 213``
+
+>### Hombre 2
+
+```python
+fshs2, h2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-2.wav")
+h2 = h2 / np.max(np.abs(h2))
+distancia_min = int(fshs2 / 80)
+picos, _ = find_peaks(h2, distance=distancia_min)
+amplitudes = h2[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Hombre 2")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.086``
+
+``Shimmer Relativo (%): 41.858``
+
+``Amplitud Media: 0.205``
+
+``Número de Ciclos: 168``
+
+>### Hombre 3
+
+```python
+fshs3, h3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-3.wav")
+h3 = h3 / np.max(np.abs(h3))
+distancia_min = int(fshs3 / 80)
+picos, _ = find_peaks(h3, distance=distancia_min)
+amplitudes = h3[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Hombre 3")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.082``
+
+``Shimmer Relativo (%): 47.956``
+
+``Amplitud Media: 0.171``
+
+``Número de Ciclos: 185``
+
+>### Mujer 1
+
+```python
+fsms1, m1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-1.wav")
+m1 = m1 / np.max(np.abs(m1))
+distancia_min = int(fsms1 / 80)
+picos, _ = find_peaks(m1, distance=distancia_min)
+amplitudes = m1[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Mujer 1")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.053``
+
+``Shimmer Relativo (%): 33.451``
+
+``Amplitud Media: 0.159``
+
+``Número de Ciclos: 194``
+
+>### Mujer 2
+
+```python
+fsms2, m2 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-2.wav")
+m2 = m2 / np.max(np.abs(m2))
+distancia_min = int(fsms2 / 150)
+picos, _ = find_peaks(m2, distance=distancia_min)
+amplitudes = m2[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Mujer 2")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+#### Resultados
+
+``Shimmer Absoluto (amplitud): 0.060``
+
+``Shimmer Relativo (%): 39.900``
+
+``Amplitud Media: 0.150``
+
+``Número de Ciclos: 235``
+
+>### Mujer 3
+
+```python
+fsms3, m3 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Mujer-3.wav")
+m3 = m3 / np.max(np.abs(m3))
+distancia_min = int(fsms3 / 80)
+picos, _ = find_peaks(m3, distance=distancia_min)
+amplitudes = m3[picos]
+if len(amplitudes) < 2:
+    print("Error: No se detectaron suficientes ciclos para calcular shimmer.")
+else:
+    diferencias = np.abs(np.diff(amplitudes))
+    shimmer_abs = np.mean(diferencias)
+    shimmer_rel = (shimmer_abs / np.mean(amplitudes)) * 100
+
+    print("Shimmer Mujer 3")
+    print(f"Shimmer Absoluto (amplitud): {shimmer_abs:.3f}")
+    print(f"Shimmer Relativo (%): {shimmer_rel:.3f}")
+    print(f"Amplitud Media: {np.mean(amplitudes):.3f}")
+    print(f"Número de Ciclos: {len(amplitudes)}")
+```
+
+``Shimmer Absoluto (amplitud): 0.075``
+
+``Shimmer Relativo (%): 49.579``
+
+``Amplitud Media: 0.151``
+
+``Número de Ciclos: 182``
 
 ## Parte C
 
