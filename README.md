@@ -579,6 +579,8 @@ El jitter (variabilidad de frecuencia ciclo a ciclo) y shimmer (variabilidad de 
 | Patología leve-moderada | 1.0–5.0%   | 5–12%    |
 | Patología severa        | >5.0%      | >12%     |
 
+<br>
+
 >[!NOTE]
 >**Aplicaciones clínicas:** Diagnóstico de nódulos, pólipos, parálisis laríngea, edema de cuerdas vocales, y detección temprana de enfermedades neurodegenerativas como Parkinson. También útil en monitoreo de terapia vocal y recuperación postquirúrgica.
 
