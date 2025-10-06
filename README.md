@@ -11,6 +11,19 @@
 * Extraer parámetros característicos de la señal de voz: frecuencia fundamental, frecuencia media, brillo, intensidad, jitter y shimmer.
 * Comparar las diferencias principales entre señales de voz de hombres y mujeres a partir de su análisis en frecuencia.
 * Desarrollar conclusiones sobre el comportamiento espectral de la voz humana en función del género. 
+## Diagramas de Flujo
+
+>### Parte A
+
+<p align="center">
+<img width="538" height="1280" alt="image" src="https://github.com/user-attachments/assets/2e19968b-f23d-4cc9-a8e1-18aac5e44c73" />
+</p>
+
+>### Parte B
+
+<p align="center">
+<img width="598" height="1280" alt="image" src="https://github.com/user-attachments/assets/15ef07ed-c13d-4ec4-be82-e5ea49452b31" />
+</p>
 
 ## Configuración inicial
 
