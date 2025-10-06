@@ -13,7 +13,104 @@
 * Desarrollar conclusiones sobre el comportamiento espectral de la voz humana en función del género. 
 ## Diagramas de Flujo
 
->### Parte A
+# **Parte A**
+## **1 y 2. Grabación y Almacenamiento en .wav**
+
+Con el propósito de realizar el pertinente análisis frecuencial, se grabó con un el micrófono de un celular la voz de 6 estudiantes de la Universidad Militar Nueva Granada, tres hombres y tres mujeres de aproximadamente 20 años de edad. La frase que se indicó a los estudiantes que repitieran fue: ***"La química se basa en cuestiones simples"***. Se utilizó el microfono de un teléfono *Android* para adquirir los archivos de audio, que posteriormente fueron convertidos al formato `.wav` requerido para la implementación en *Google Colab*. Estos fueron guardados con un identificador que permitió su identificación tanto de género como de número (`géneronúmero.wav`) para facilitar la identificación en el código.
+
+Para la implementación en *Google Colab*, en primera instancia de cargaron los archivos `.wav` en la unidad de *Drive*, para posteriormente ser leídos. Se muestra a continuación la sintaxis para cargar el contenido del *Drive* al código:
+
+```python
+from google.colab import drive
+drive.mount('/content/drive')
+```
+La lectura de cada una de las señales se realizó con la ayuda del módulo `scipy.io.wavfile` de la siguiente manera:
+
+```python
+fs1, hombre1 = wavfile.read("/content/drive/MyDrive/Colab Notebooks/Lab Procesamiento Digital de Señales/PDS - Lab 3/Hombre-1.wav")
+```
+Donde `fs1` almacena la frecuencia de muestreo de la señal y `hombre1` crea un array que guarda la señal de audio. De esta manera, se identificó la frecuencia de muestreo estándar del micrófono, $f_s=48000 Hz$ para todas las señales. Se realizó este procedimiento de manera secuencial para las señales restantes.
+
+## **3. Gráficas en el Dominio del Tiempo**
+Con las señales ya almacenadas en arrays, se procedió a graficar cada una de ellas utilizando `NumPy` y `matplotlib.pyplot` como se muestra a continuación:
+
+```python
+n1 = np.arange(len(hombre1))
+plt.figure(figsize=(10, 4))
+plt.stem(n1, hombre1)
+plt.xlabel("n (muestras)")
+plt.ylabel("Amplitud")
+plt.title("Hombre 1")
+plt.grid(True)
+plt.show()
+```
+> [!NOTE]
+> Nótese la creación del array `n1` del eje de muestras $n$ para poder graficar la señal, usando la función `np.arange()` del tamaño de la señal dado por `len()`.
+
+### Hombre 1
+<img width="891" height="393" alt="image" src="https://github.com/user-attachments/assets/73961c70-34f1-4c8f-8d96-b10690588bad" />
+
+### Hombre 2
+<img width="879" height="393" alt="image" src="https://github.com/user-attachments/assets/5e09de5c-e577-4405-b013-2d750f76bb66" />
+
+### Hombre 3
+<img width="879" height="393" alt="image" src="https://github.com/user-attachments/assets/b76c0d63-9878-495b-95f7-a627d6dedab3" />
+
+### Mujer 1
+<img width="879" height="393" alt="image" src="https://github.com/user-attachments/assets/c5d99294-d37e-48a0-832d-16ea04af9344" />
+
+### Mujer 2
+<img width="879" height="393" alt="image" src="https://github.com/user-attachments/assets/13709577-0795-41cb-8721-ab8225e7120f" />
+
+### Mujer 3
+<img width="879" height="393" alt="image" src="https://github.com/user-attachments/assets/2f05eeec-018b-4a1a-9925-5f788e9f0c00" />
+
+## **4. Transformadas de Fourier (FFT´s)**
+Una vez importados todos los archivos `.wav` y graficados en el dominio del tiempo, se procedió a analizar las señales de audio en el dominio de la frecuencia mediante la Transformada Rápida de Fourier (FFT).  Para ello, se usó el módulo `numpy.fft`, que contiene todas las funciones relacionadas con la FFT.
+```python
+fft_hombre1 = fft(hombre1)
+nh1 = len(hombre1)
+freq_hombre1 = fftfreq(nh1, 1/fs1)
+fft_hombre1 = np.abs(fft_hombre1)
+fft_hombre1 = fft_hombre1[:nh1//2]
+freq_hombre1 = freq_hombre1[:nh1//2]
+```
+* `fft_hombre1`: Magnitud
+* `freq_hombre1`: Frecuencias
+
+> [!NOTE]
+> La magnitud de la FFT se calcula con `np.abs(fft_hombre1)`,  la mitad positiva tanto del eje de frecuencias y el de las magnitudes se obtienen tomando la mitad inferior de los arrays dada por `nh1//2`.
+
+Con ambos ejes de la FFT, su gráfica se realizó empleando la siguiente sintaxis de manera secuencial para cada señal:
+```python
+plt.plot(freq_hombre1, fft_hombre1)
+plt.xlabel("Frecuencia (Hz)")
+plt.ylabel("Amplitud")
+plt.title("Hombre 1")
+plt.xlim(0, 1000) #muestra de 0 a 1000 Hz
+plt.grid(True)
+plt.show()
+```
+> [!IMPORTANT]
+> Para poder ver con mayor detalle las componentes espectrales más relevantes, se tomó el eje de frecuencias de $0$ a $1000 Hz$. Este intervalo concentra la mayor parte de la energía de las señales de voz humanas, así que un zoom a esta zona permite identificar los picos frecuenciales que pueden representar la frecuencia fundamental y sus armónicos.
+
+### Hombre 1
+<img width="584" height="455" alt="image" src="https://github.com/user-attachments/assets/46085dfb-c995-41d3-9f65-8295120f2fe8" />
+
+### Hombre 2
+<img width="584" height="455" alt="image" src="https://github.com/user-attachments/assets/511327d3-b5d0-4fca-b024-e58e4d7a9719" />
+
+### Hombre 3
+<img width="593" height="455" alt="image" src="https://github.com/user-attachments/assets/ee828633-0d33-4455-874b-5a15382eda5e" />
+
+### Mujer 1
+<img width="584" height="455" alt="image" src="https://github.com/user-attachments/assets/ccb0d9a3-e4c8-4da5-aee0-fb1c0f4a8d42" />
+
+### Mujer 2
+<img width="593" height="455" alt="image" src="https://github.com/user-attachments/assets/40a72846-60b4-452d-8687-735b8cabae6b" />
+
+### Mujer 3
+<img width="593" height="455" alt="image" src="https://github.com/user-attachments/assets/099bca0a-705b-44cb-ae7f-d9259d57c276" />
 
 <p align="center">
 <img width="538" height="1280" alt="image" src="https://github.com/user-attachments/assets/2e19968b-f23d-4cc9-a8e1-18aac5e44c73" />
