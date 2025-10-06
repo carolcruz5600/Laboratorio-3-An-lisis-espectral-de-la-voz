@@ -550,6 +550,8 @@ El jitter relativo muestra valores similares entre ambos grupos, con promedios d
 | Hombres | 85–180 Hz                      | 549.5 Hz       | Valor superior al rango típico |
 | Mujeres | 165–255 Hz                     | 371.9 Hz       | Valor superior al rango típico |
 
+<br>
+
 >[!NOTE]
 >Los valores obtenidos se encuentran por encima de los rangos reportados en la literatura para voces adultas. El método de detección basado en máximo de FFT puede ser sensible a componentes armónicos de mayor amplitud en el espectro, lo que puede influir en los valores registrados.
 
@@ -563,8 +565,11 @@ El jitter relativo muestra valores similares entre ambos grupos, con promedios d
 
 ### **3. Conclusiones sobre el Comportamiento de la Voz**
 
-El análisis espectral confirmó las diferencias anatómicas y fisiológicas esperadas entre voces masculinas y femeninas. Las voces femeninas exhiben desplazamiento sistemático hacia frecuencias más altas, manifestado en mayor frecuencia media (``+29.3%``) y brillo espectral (``+17.8%``). Esto se origina en la menor longitud del tracto vocal femenino, que genera resonancias (formantes) en posiciones frecuenciales superiores según la teoría acústica de tubos.
-Los parámetros espectrales (frecuencia media y brillo) fueron consistentes y válidos, mientras que las mediciones temporales (F0 y jitter) presentaron valores anómalos que indican limitaciones en los algoritmos utilizados. Es importante destacar que la frecuencia fundamental requiere métodos especializados como autocorrelación.
+El análisis confirmó las diferencias anatómicas y fisiológicas esperadas entre voces masculinas y femeninas, evidenciando patrones consistentes en la producción vocal. Las voces femeninas se caracterizaron por un desplazamiento hacia frecuencias más altas, reflejado en una mayor frecuencia media (``+29.3%``) y un incremento en el brillo espectral (``+17.8%``). Este comportamiento se explica por la menor longitud del tracto vocal femenino (``14–15 cm`` frente a ``17–18 cm`` en hombres), lo que genera resonancias en frecuencias superiores. De acuerdo con los principios acústicos, un conducto más corto produce formantes más elevados, lo que eleva el centro de gravedad espectral y contribuye a la percepción de un timbre más agudo.
+
+Los parámetros espectrales analizados (frecuencia media y brillo) mostraron consistencia y concordancia con lo descrito en la literatura, lo que confirma su utilidad como descriptores para diferenciar características vocales entre géneros. 
+
+En contraste, los parámetros temporales (frecuencia fundamental y jitter) presentaron variaciones atípicas atribuibles a las limitaciones del procedimiento de cálculo utilizado. La frecuencia fundamental requiere técnicas de estimación que identifiquen de manera precisa la periodicidad de la señal, mientras que el método aplicado se basó en la detección del máximo espectral, el cual puede verse afectado por la energía de los armónicos. Este aspecto no invalida los resultados generales, pero resalta la importancia de emplear procedimientos específicos y adecuados para cada tipo de parámetro.
 
 ### **4. Importancia Clínica del Jitter y Shimmer**
 >### 4.1 Relevancia Clínica
