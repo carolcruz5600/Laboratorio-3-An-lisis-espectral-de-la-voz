@@ -12,7 +12,34 @@
 * Comparar las diferencias principales entre señales de voz de hombres y mujeres a partir de su análisis en frecuencia.
 * Desarrollar conclusiones sobre el comportamiento espectral de la voz humana en función del género. 
 ## Diagramas de Flujo
+>### Parte A
+<p align="center">
+<img width="538" height="1280" alt="image" src="https://github.com/user-attachments/assets/2e19968b-f23d-4cc9-a8e1-18aac5e44c73" />
+</p>
 
+>### Parte B
+
+<p align="center">
+<img width="598" height="1280" alt="image" src="https://github.com/user-attachments/assets/15ef07ed-c13d-4ec4-be82-e5ea49452b31" />
+</p>
+
+## Configuración inicial
+
+Para la parte A y B se necesitan el uso de librerias:
+```python
+from scipy.io import wavfile
+from scipy.fft import fft, fftfreq
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.signal import butter, filtfilt
+from scipy.signal import find_peaks
+```
+* scipy.io: Para poder leer y escribir los archivos de audio ``.wav``.
+* scipy.fft: Se usa para poder trabajar con la transformada de fourier.
+* matplotlib.pyplot: Para poder realizar las diferentes graficas de las señales, transformadas y las señales filtradas.
+* numpy: Para realizar los cálculos numéricos necesarios.
+* scipy.signal: Se utiliza para realizar los filtros a las señales escogidas.
+  
 # **Parte A**
 ## **1 y 2. Grabación y Almacenamiento en .wav**
 
@@ -111,35 +138,6 @@ plt.show()
 
 ### Mujer 3
 <img width="593" height="455" alt="image" src="https://github.com/user-attachments/assets/099bca0a-705b-44cb-ae7f-d9259d57c276" />
-
-<p align="center">
-<img width="538" height="1280" alt="image" src="https://github.com/user-attachments/assets/2e19968b-f23d-4cc9-a8e1-18aac5e44c73" />
-</p>
-
->### Parte B
-
-<p align="center">
-<img width="598" height="1280" alt="image" src="https://github.com/user-attachments/assets/15ef07ed-c13d-4ec4-be82-e5ea49452b31" />
-</p>
-
-## Configuración inicial
-
-Para la parte A y B se necesitan el uso de librerias:
-```python
-from scipy.io import wavfile
-from scipy.fft import fft, fftfreq
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.signal import butter, filtfilt
-from scipy.signal import find_peaks
-```
-* scipy.io: Para poder leer y escribir los archivos de audio ``.wav``.
-* scipy.fft: Se usa para poder trabajar con la transformada de fourier.
-* matplotlib.pyplot: Para poder realizar las diferentes graficas de las señales, transformadas y las señales filtradas.
-* numpy: Para realizar los cálculos numéricos necesarios.
-* scipy.signal: Se utiliza para realizar los filtros a las señales escogidas.
-  
-## Parte A
 
 ## Parte B
 ### **Señal de Voz Hombre 2**
