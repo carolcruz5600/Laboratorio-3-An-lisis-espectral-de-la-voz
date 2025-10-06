@@ -27,7 +27,8 @@ from scipy.signal import find_peaks
 * scipy.fft: Se usa para poder trabajar con la transformada de fourier.
 * matplotlib.pyplot: Para poder realizar las diferentes graficas de las señales, transformadas y las señales filtradas.
 * numpy: Para realizar los cálculos numéricos necesarios.
-* scipy.signal: Se utiliza para realizar los filtros a las señales escogidas. 
+* scipy.signal: Se utiliza para realizar los filtros a las señales escogidas.
+  
 ## Parte A
 
 ## Parte B
@@ -483,10 +484,14 @@ else:
 | Condiciones ambientales | Controladas                 | Sin ruido ambiental significativo      |
 | Calidad general         | Buena                       | Sin saturación detectada               |
 
+
 Las grabaciones se realizaron en condiciones controladas con buena calidad de señal. No obstante, se evidenció variabilidad en la duración y en la amplitud de las muestras, lo cual puede asociarse a diferencias en la ejecución de cada registro. Para mantener cierta homogeneidad, la distancia al micrófono se midió de manera aproximada utilizando una regla de 10 cm desde el pecho.
 
+
 ### **2. Análisis Comparativo: Voces Masculinas vs Femeninas**
+
 >### 2.1 Tabla de Resultados por Grupo
+
 | **Sujeto**          | **F0 (Hz)** | **F Media (Hz)** | **Brillo** | **Energía (×10¹⁵)** | **Jitter (%)** |
 |-----------------|---------|--------------|--------|-----------------|------------|
 | Hombre 1        | 577.18  | 3142.40      | 0.488  | 82.65           | 21.14      |
@@ -542,9 +547,46 @@ El jitter relativo muestra valores similares entre ambos grupos, con promedios d
 | Mujeres | 165–255 Hz                     | 371.9 Hz       | Valor superior al rango típico |
 
 >[!NOTE]
->Los valores obtenidos se encuentran por encima de los rangos reportados en la literatura para voces adultas [Baken, R. J., & Orlikoff, R. F. (2000). Clinical Measurement of Speech and Voice (2nd ed.). Singular Thomson Learning]. El método de detección basado en máximo de FFT puede ser sensible a componentes armónicos de mayor amplitud en el espectro, lo que puede influir en los valores registrados.
+>Los valores obtenidos se encuentran por encima de los rangos reportados en la literatura para voces adultas. El método de detección basado en máximo de FFT puede ser sensible a componentes armónicos de mayor amplitud en el espectro, lo que puede influir en los valores registrados.
 
+>### 2.4 Diferencias en términos de Brillo, Frecuencia Media e Intensidad
 
+**Frecuencia Media**: Las mujeres presentaron valores 29.3% mayores (``4,616 Hz`` vs ``3,570 Hz``), reflejando el desplazamiento espectral hacia frecuencias altas debido a un tracto vocal más corto (``~15 cm`` vs ``~17 cm`` en hombres). Este resultado es consistente con la fisiología vocal.
+
+**Brillo Espectral**: Las mujeres mostraron ``17.8%`` más brillo (``0.550`` vs ``0.467``), indicando mayor concentración de energía por encima de ``1500 Hz``. Esto explica perceptualmente por qué las voces femeninas suenan más "agudas" o "brillantes". Este resultado también es consistente y esperado.
+
+**Intensidad**: Los hombres registraron 38% mayor energía. Aunque puede reflejar diferencias fisiológicas (mayor masa de cuerdas vocales), sin normalización de volumen no es posible distinguir entre diferencias reales y artefactos de grabación (distancia al micrófono, ganancia variable).
+
+### **3. Conclusiones sobre el Comportamiento de la Voz**
+
+El análisis espectral confirmó las diferencias anatómicas y fisiológicas esperadas entre voces masculinas y femeninas. Las voces femeninas exhiben desplazamiento sistemático hacia frecuencias más altas, manifestado en mayor frecuencia media (``+29.3%``) y brillo espectral (``+17.8%``). Esto se origina en la menor longitud del tracto vocal femenino, que genera resonancias (formantes) en posiciones frecuenciales superiores según la teoría acústica de tubos.
+Los parámetros espectrales (frecuencia media y brillo) fueron consistentes y válidos, mientras que las mediciones temporales (F0 y jitter) presentaron valores anómalos que indican limitaciones en los algoritmos utilizados. Es importante destacar que la frecuencia fundamental requiere métodos especializados como autocorrelación.
+
+### **4. Importancia Clínica del Jitter y Shimmer**
+>### 4.1 Relevancia Clínica
+
+El jitter (variabilidad de frecuencia ciclo a ciclo) y shimmer (variabilidad de amplitud) son parámetros fundamentales en evaluación vocal objetiva. Miden la estabilidad de vibración de las cuerdas vocales.
+
+>### Valores de referencia:
+
+| Condición               | Jitter     | Shimmer  |
+|-------------------------|------------|----------|
+| Voz normal              | <1.0%      | <3–5%    |
+| Patología leve-moderada | 1.0–5.0%   | 5–12%    |
+| Patología severa        | >5.0%      | >12%     |
+
+>[!NOTE]
+>**Aplicaciones clínicas:** Diagnóstico de nódulos, pólipos, parálisis laríngea, edema de cuerdas vocales, y detección temprana de enfermedades neurodegenerativas como Parkinson. También útil en monitoreo de terapia vocal y recuperación postquirúrgica.
+
+>### 4.2. Evaluación de Resultados Obtenidos
+
+Los valores obtenidos para Jitter (``17–24%`` en todos los sujetos) y Shimmer (``37–42%`` en hombres) se encuentran muy por encima de los rangos fisiológicos reportados en la literatura. Estos resultados no deben interpretarse como indicativos de patología vocal en los participantes, sino como consecuencia de limitaciones en el procedimiento de detección automática de ciclos glóticos. En particular, el uso de ``find_peaks()`` con una distancia mínima basada únicamente en la frecuencia estimada puede llevar a identificar oscilaciones de alta frecuencia en lugar de ciclos glóticos completos.
+
+>### 4.3. Utilidad en Ingeniería Biomédica
+Más allá del diagnóstico clínico, jitter y shimmer tienen aplicaciones en telemedicina (monitoreo remoto de pacientes), sistemas de apoyo diagnóstico basados en inteligencia artificial, biometría vocal para autenticación, y como endpoints cuantificables en investigación farmacológica. Su medición no requiere equipamiento especializado, permitiendo evaluación objetiva mediante grabaciones simples, siempre que se utilicen algoritmos validados.
+
+>[!NOTE]
+>Para la comparación de los parámetros evaluados se tomaron como referencia los rangos reportados por Baken y Orlikoff (2000) en su obra ``"Clinical Measurement of Speech and Voice"``, texto estándar en la medición acústica de la voz que establece rangos típicos de frecuencia fundamental (F0) entre ``85-180 Hz`` para voces masculinas adultas y ``165-255 Hz`` para voces femeninas adultas, así como valores normativos para jitter (``<1.0%`` en voces normales) y shimmer (``<3-5%`` en voces normales). Estos rangos permitieron contextualizar los resultados obtenidos y evidenciar algunas discrepancias entre los valores medidos y los esperados según la fisiología vocal.
 
 
 
