@@ -119,7 +119,7 @@ plt.grid(True)
 plt.show()
 ```
 > [!IMPORTANT]
-> Para poder ver con mayor detalle las componentes espectrales más relevantes, se tomó el eje de frecuencias de $0$ a $1000$ $Hz$. Este intervalo concentra la mayor parte de la energía de las señales de voz humanas, así que un zoom a esta zona permite identificar los picos frecuenciales que pueden representar la frecuencia fundamental y sus armónicos.
+> Para poder ver con mayor detalle las componentes espectrales más relevantes, se tomó el eje de frecuencias de $0$ a $1000$ $Hz$. Este intervalo concentra la mayor parte de la energía de las señales de voz humanas, así que un zoom a esta zona permite identificar los picos frecuenciales que pueden representar la **frecuencia fundamental** y sus armónicos.
 
 ### Hombre 1
 <img width="584" height="455" alt="image" src="https://github.com/user-attachments/assets/46085dfb-c995-41d3-9f65-8295120f2fe8" />
