@@ -239,7 +239,7 @@ e_h1 = energia(fft_hombre1)
 * **Mujer 2:** $6.399 \times 10^{16}$
 * **Mujer 3:** $6.436 \times 10^{16}$
 
-## Parte B
+# Parte B
 ### **Señal de Voz Hombre 2**
 
 Se utiliza un audio grabado por un hombre. Primero, se realizan los cálculos manuales para poder aplicar el filtro a la señal. Se utilizan frecuencias de $Ω_l = 80 Hz$ y $Ω_2 = 400 Hz$ que son frecuencias que se encuetran dentro del rango de la frecuencia fundamental esto se hace para eliminar ruido que esten fuera de esos valores recomendados a niveles de $-2dB$ para, también se utilizaron frecuencias de atenuación de $Ω_1 = 20 Hz$ y $Ω_2 = 550 Hz$ trabajadas a $-10dB$ para evitar recortes importantes o bruscos en la señales.
@@ -679,7 +679,7 @@ else:
 
 ``Número de Ciclos: 182``
 
-## Parte C
+# Parte C
 
 ### **1. Registro de Adquisición**
 | **Parámetro**              | **Valor/Descripción**           | **Observaciones**                          |
