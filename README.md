@@ -119,7 +119,7 @@ plt.grid(True)
 plt.show()
 ```
 > [!IMPORTANT]
-> Para poder ver con mayor detalle las componentes espectrales más relevantes, se tomó el eje de frecuencias de $0$ a $1000 Hz$. Este intervalo concentra la mayor parte de la energía de las señales de voz humanas, así que un zoom a esta zona permite identificar los picos frecuenciales que pueden representar la frecuencia fundamental y sus armónicos.
+> Para poder ver con mayor detalle las componentes espectrales más relevantes, se tomó el eje de frecuencias de $0$ a $1000$ $Hz$. Este intervalo concentra la mayor parte de la energía de las señales de voz humanas, así que un zoom a esta zona permite identificar los picos frecuenciales que pueden representar la frecuencia fundamental y sus armónicos.
 
 ### Hombre 1
 <img width="584" height="455" alt="image" src="https://github.com/user-attachments/assets/46085dfb-c995-41d3-9f65-8295120f2fe8" />
@@ -138,6 +138,106 @@ plt.show()
 
 ### Mujer 3
 <img width="593" height="455" alt="image" src="https://github.com/user-attachments/assets/099bca0a-705b-44cb-ae7f-d9259d57c276" />
+
+## **5. Características de la Señal**
+Para concluir esta sección, luego de obtener las FFT de las señales, se procedió a extraer algunos parámetros característicos que permiten describir el contenido espectral y energético de las FFT. Estos indicadores son esenciales en el análisis de la voz, ya que permiten identificar diferencias entre la voz de los hablantes y comprender la variación de las propiedades acústicas en función del género o las características fisiológicas.
+
+> Frecuencia Fundamental
+
+Corresponde al primer pico principal del espectro de magnitudes de una señal. Representa la frecuencia de vibración dominante, que a su vez se asocia con el tono de voz percibido. Para calcularla en `python`, se determinó una función que identifica la posición donde se encuentra el pico mas alto en el espectro de la FFT, luego se asocia con la frecuencia correspondiente:
+```python
+# Función
+def f_fund(fft_magnitud, freqs):
+    idx = np.argmax(fft_magnitud[1:]) + 1
+    freq_fund = freqs[idx]
+    return freq_fund
+# Cálculo
+ff_h1 = f_fund(fft_hombre1, freq_hombre1)
+```
+#### Resultados
+
+* **Hombre 1:** $577.184$ $Hz$
+* **Hombre 2:** $571.948$ $Hz$
+* **Hombre 3:** $499.362$ $Hz$
+* **Mujer 1:** $246.41$ $Hz$
+* **Mujer 2:** $446.493$ $Hz$
+* **Mujer 3:** $422.917$ $Hz$
+  
+> Frecuencia Media
+
+Representa el promedio ponderado de las frecuencias que componen una señal. Indica la región del espectro donde se concentra la mayor parte de la energía de la señal. Matemáticamente se puede obtener mediante la siguiente expresión:
+
+$$f_{media}=\frac{\sum(|X(f)|\cdot f)}{\sum|X(f)|}$$
+
+Donde $|X(f)|$ es la magnitud de la FFT y $f$ es la frecuencia. En `python`, se implementó una función que realiza el cálculo y que arroja $0$ si la señal el silenciosa, para evitar la división entre $0$.
+
+```python
+# Función
+def f_media(fft_magnitud, freqs):
+    if np.sum(fft_magnitud) == 0:
+        return 0
+    return np.sum(freqs * fft_magnitud) / np.sum(fft_magnitud)
+# Cálculo
+fm_h1 = f_media(fft_hombre1, freq_hombre1)
+```
+#### Resultados
+
+* **Hombre 1:** $3142.4$ $Hz$
+* **Hombre 2:** $3080.579$ $Hz$
+* **Hombre 3:** $4487.849$ $Hz$
+* **Mujer 1:** $3972.601$ $Hz$
+* **Mujer 2:** $4866.953$ $Hz$
+* **Mujer 3:** $5008.831$ $Hz$
+
+> Brillo
+
+Describe la proporción de energía concentrada en las frecuencias altas de una señal. En el ámbito de la voz humana, un mayor brillo indica un tono más agudo, mientras que un brillo bajo indica un sonido más grave. Está definido mediante la siguiente expresión:
+
+$$B=\frac{\sum_{f>f_c}|X(f)|}{\sum|X(f)|}$$
+
+Donde $|X(f)|$ es la magnitud de la FFT y $f_c$ es la **frecuencia de corte** que delimita el rango considerado como "alta frecuencia". En este caso, se usó $f_c=1500$ $Hz$. En `python` se definió una función que calcula la relación entre la energía alta (a partir de $1500$ $Hz$) y la energía total del espectro. Nuevamente arroja $0$ si la señal es silenciosa.
+```python
+# Función
+def brillo(fft_magnitud, freqs, f_corte=1500):
+    energia_total = np.sum(fft_magnitud)
+    energia_alta = np.sum(fft_magnitud[freqs > f_corte])
+    if energia_total == 0:
+        return 0
+    return energia_alta / energia_total
+# Cálculo
+b_h1 = brillo(fft_hombre1, freq_hombre1)
+```
+#### Resultados
+
+* **Hombre 1:** $0.488$
+* **Hombre 2:** $0.439$
+* **Hombre 3:** $0.474$
+* **Mujer 1:** $0.469$
+* **Mujer 2:** $0.63$
+* **Mujer 3:** $0.55$
+
+> Intensidad (energía)
+
+Indica cuanto contribuye cada componente espectral de frecuencia a una señal. Una mayor energía en determinada frecuencia representa que gran parte de la energía total de la señal corresponde a esa frecuencia en específico. Está dada por:
+
+$$E=\sum_{k=0}^{N-1}|X(k)|^2$$
+
+Donde $|X(k)|$ es la magnitud de la componente frecuencial en $k$ y $N$ es el número total de muestras. En `python` simplemente se creó una función que aplica la ecuación teniendo como parámetro la magnitud de la FFT.
+```python
+# Función
+def energia(fft_magnitud):
+    return np.sum(fft_magnitud ** 2)
+# Cálculo
+e_h1 = energia(fft_hombre1)
+```
+#### Resultados
+
+* **Hombre 1:** $8.265 \times 10^{16}$
+* **Hombre 2:** $1.068 \times 10^{17}$
+* **Hombre 3:** $8.668 \times 10^{16}$
+* **Mujer 1:** $4.494 \times 10^{16}$
+* **Mujer 2:** $6.399 \times 10^{16}$
+* **Mujer 3:** $6.436 \times 10^{16}$
 
 ## Parte B
 ### **Señal de Voz Hombre 2**
@@ -719,9 +819,5 @@ Más allá del diagnóstico clínico, jitter y shimmer tienen aplicaciones en te
 >[!NOTE]
 >Para la comparación de los parámetros evaluados se tomaron como referencia los rangos reportados por Baken y Orlikoff (2000) en su obra ``"Clinical Measurement of Speech and Voice"``, texto estándar en la medición acústica de la voz que establece rangos típicos de frecuencia fundamental (F0) entre ``85-180 Hz`` para voces masculinas adultas y ``165-255 Hz`` para voces femeninas adultas, así como valores normativos para jitter (``<1.0%`` en voces normales) y shimmer (``<3-5%`` en voces normales). Estos rangos permitieron contextualizar los resultados obtenidos y evidenciar algunas discrepancias entre los valores medidos y los esperados según la fisiología vocal.
 
-
-
-
-
-
-
+## **Notebook en *Google Colab***
+Link: [Práctica 3 - Análisis Espectral de la Voz](https://colab.research.google.com/drive/1LQ8TNPYwzYItK29W52ATav75HM3xyUMV?usp=sharing)
